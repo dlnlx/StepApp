@@ -30,6 +30,7 @@ import com.lxsoft.service.IPedometerService;
 import com.lxsoft.service.PedometerService;
 import com.lxsoft.utiles.Utiles;
 import com.lxsoft.widgets.CircleProgressBar;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -341,4 +342,6 @@ public class HomeActivity extends BaseActivity {
             unbindService(serviceConnection);
         }
     }
+
+
 }

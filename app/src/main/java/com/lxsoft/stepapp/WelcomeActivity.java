@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.lxsoft.frame.BaseActivity;
+import com.umeng.analytics.MobclickAgent;
 
 public class WelcomeActivity extends BaseActivity {
 
@@ -16,6 +17,18 @@ public class WelcomeActivity extends BaseActivity {
     private Runnable jumpRunnable;
     @Override
     protected void onInitVariable() {
+
+//        new Thread("lxsoft-step"){
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(3*60*1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }.start();
+//        new MyTask("lxsoft-step").start();
 
         handler = new Handler();
         jumpRunnable = new Runnable() {
@@ -30,6 +43,20 @@ public class WelcomeActivity extends BaseActivity {
         };
     }
 
+    public static class MyTask extends Thread{
+        public MyTask(String name){
+            super(name);
+        }
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(3*60*1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     protected void onInitView(Bundle savedInstanceState) {
 
@@ -38,7 +65,7 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void onRequestData() {
-
         handler.postDelayed(jumpRunnable,DELAY_MILLIS);
     }
+
 }

@@ -8,6 +8,8 @@ import android.view.WindowManager;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
+import com.umeng.analytics.MobclickAgent;
+
 public abstract class BaseActivity extends FragmentActivity {
     /*是否显示程序标题*/
     protected boolean isHideAppTitle = true;
@@ -41,4 +43,16 @@ public abstract class BaseActivity extends FragmentActivity {
     protected abstract void onInitView(final Bundle savedInstanceState);
     /*3.请求数据*/
     protected abstract void onRequestData();
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 }

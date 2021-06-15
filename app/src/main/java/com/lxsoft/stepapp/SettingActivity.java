@@ -23,6 +23,7 @@ import com.lxsoft.service.IPedometerService;
 import com.lxsoft.service.PedometerService;
 import com.lxsoft.utiles.Settings;
 import com.lxsoft.utiles.Utiles;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -302,4 +303,5 @@ public class SettingActivity extends BaseActivity {
         unbindService(serviceConnection);
         super.onDestory();
     }
+
 }
