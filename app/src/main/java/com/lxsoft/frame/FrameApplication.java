@@ -46,7 +46,9 @@ public class FrameApplication extends Application {
         }catch (final Exception e){
 
         }finally {
+            /*退出*/
             System.exit(0);
+            /*杀掉当前进程的PID*/
             android.os.Process.killProcess(android.os.Process.myPid());
         }
     }

@@ -19,10 +19,12 @@ public abstract class BaseActivity extends FragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.onInitVariable();
         if(this.isHideAppTitle){
+            /*隐藏掉程序标题*/
             this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         }
         super.onCreate(savedInstanceState);
         if(this.isHideSysTitle){
+            /*隐藏掉系统标题*/
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
         /*构造View,绑定事件*/

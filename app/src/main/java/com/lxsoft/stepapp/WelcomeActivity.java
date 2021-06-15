@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.lxsoft.frame.BaseActivity;
+import com.lxsoft.frame.LogWriter;
 import com.umeng.analytics.MobclickAgent;
 
 public class WelcomeActivity extends BaseActivity {
@@ -28,7 +29,7 @@ public class WelcomeActivity extends BaseActivity {
 //                }
 //            }
 //        }.start();
-//        new MyTask("lxsoft-step").start();
+        new MyTask("lxsoft-step").start();
 
         handler = new Handler();
         jumpRunnable = new Runnable() {
@@ -52,7 +53,7 @@ public class WelcomeActivity extends BaseActivity {
             try {
                 Thread.sleep(3*60*1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                LogWriter.d(e.toString());
             }
         }
     }
