@@ -2,6 +2,9 @@ package com.lxsoft.frame;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+
+
 
 import java.util.LinkedList;
 
@@ -71,4 +74,5 @@ public class FrameApplication extends Application {
         prefsManager = new PrefsManager(this);
         errorHandler = ErrorHandler.getInstance();
     }
+
 }

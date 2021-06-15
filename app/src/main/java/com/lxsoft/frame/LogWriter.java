@@ -1,7 +1,10 @@
 package com.lxsoft.frame;
 
+import android.app.AlertDialog;
 import android.os.Environment;
 import android.util.Log;
+
+import com.lxsoft.stepapp.BuildConfig;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,7 +14,7 @@ import java.io.IOException;
 
 public class LogWriter {
     private static final String DEBUG_TAG = "lxsoft";
-    private static boolean isDebug = true;
+    private static boolean isDebug = BuildConfig.DEBUG;
     private static boolean isWriteToLog = false;
 
     public static void d(final Object thiz, final String msg)
