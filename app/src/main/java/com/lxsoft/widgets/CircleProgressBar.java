@@ -38,6 +38,7 @@ public class CircleProgressBar extends View {
         super(context, attrs);
         //初始化绘制
         pathPaint = new Paint();
+        //设置抗锯齿
         pathPaint.setAntiAlias(true);
         pathPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
         pathPaint.setStyle(Paint.Style.STROKE);

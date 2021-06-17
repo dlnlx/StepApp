@@ -153,7 +153,6 @@ public class HomeActivity extends BaseActivity {
         });
     }
 
-
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -302,6 +301,7 @@ public class HomeActivity extends BaseActivity {
             } catch (RemoteException e) {
                 LogWriter.d(e.toString());
             }
+            //更新数据到UI
             stepCount.setText(String.valueOf(stepCountVal)+"步");
             textCalorie.setText(com.lxsoft.utiles.Utiles.getFormatVal(calorieVal)+"卡");
             distance.setText(com.lxsoft.utiles.Utiles.getFormatVal(distanceVal));
