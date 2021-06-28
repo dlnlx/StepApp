@@ -37,7 +37,7 @@ public class WelcomeActivity extends BaseActivity {
             public void run() {
                 /*跳转到Home*/
                 Intent intent = new Intent();
-                intent.setClass(WelcomeActivity.this,HomeActivity.class);
+                intent.setClass(WelcomeActivity.this,BannerExpressActivity.class);
                 startActivity(intent);
                 WelcomeActivity.this.finish();
             }

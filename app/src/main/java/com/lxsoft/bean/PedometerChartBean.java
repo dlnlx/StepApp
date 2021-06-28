@@ -3,8 +3,8 @@ package com.lxsoft.bean;
 import android.os.Parcel;
 
 public class PedometerChartBean implements android.os.Parcelable{
-    private int[] arrayData = new int[1440];
-    private int index = 0;
+    private int[] arrayData;
+    private int index;
 
     protected PedometerChartBean(Parcel in) {
         arrayData = in.createIntArray();

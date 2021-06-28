@@ -7,6 +7,7 @@ import android.hardware.SensorManager;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -165,6 +166,8 @@ public class PedometerService extends Service {
                     @Override
                     public void run() {
                         DBHelper dbHelper = new DBHelper(PedometerService.this, DBHelper.DB_NAME);
+                        pedometerBean.setStepCount(pedometerListener.getCurrentSteps());
+                        pedometerBean.setLastStepTime(System.currentTimeMillis());
                         //设置距离
                         pedometerBean.setDistance(getDistanceVal());
                         //设置热量消耗
@@ -179,6 +182,7 @@ public class PedometerService extends Service {
                             long speed = Math.round((pedometerBean.getDistance()/1000)/(time/60*60));
                             pedometerBean.setSpeed(speed);
                         }
+                        Log.d("TAG", " "+pedometerBean.toString());
                         dbHelper.writeToDatabase(pedometerBean);
                     }
                 }).start();

@@ -53,6 +53,10 @@ public class PedometerListener implements SensorEventListener {
         currentSteps = step;
     }
 
+    public int getCurrentSteps() {
+        return currentSteps;
+    }
+
     private PedometerBean data;
     public PedometerListener(PedometerBean data){
         this.data = data;
@@ -105,6 +109,7 @@ public class PedometerListener implements SensorEventListener {
                                 if(data != null){
                                     data.setStepCount(currentSteps);
                                     data.setLastStepTime(System.currentTimeMillis());
+
                                 }
                             }else{
                                 mLastDiff = sensitivity;

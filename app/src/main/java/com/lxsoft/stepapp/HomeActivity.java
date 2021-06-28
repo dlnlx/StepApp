@@ -34,7 +34,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity{
 
     private CircleProgressBar progressBar;
     private TextView textCalorie;

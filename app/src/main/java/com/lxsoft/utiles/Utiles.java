@@ -3,9 +3,12 @@ package com.lxsoft.utiles;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.util.Log;
 
 import com.google.gson.Gson;
+import com.lxsoft.bean.PedometerChartBean;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,22 +17,28 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Utiles {
-    public static long getTimestempByDay(){
+    public static String getTimestempByDay(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date d = new Date();
         String dateStr = sdf.format(d);
         try {
+            System.out.println(dateStr);
             Date date = sdf.parse(dateStr);
-            return date.getTime();
+            return dateStr;
         }catch (ParseException e){
             e.printStackTrace();
         }
-        return 0L;
+        return null;
     }
 
     public static String objToJson(Object obj){
         Gson gson = new Gson();
         return gson.toJson(obj);
+    }
+
+    public static PedometerChartBean jsonToObj(Gson gson){
+        Gson gson2 = new Gson();
+        return gson2.fromJson(String.valueOf(gson), PedometerChartBean.class);
     }
 
     public static String getFormatVal(double val){
@@ -58,5 +67,14 @@ public class Utiles {
             }
         }
         return isRunning;
+    }
+
+    public static double round(double value, int scale, int roundingMode)
+    {
+        BigDecimal bigData = new BigDecimal(value);
+        bigData = bigData.setScale(scale, roundingMode);
+        double dv = bigData.doubleValue();
+        bigData = null;
+        return dv;
     }
 }

@@ -8,15 +8,19 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lxsoft.bean.PedometerBean;
+import com.lxsoft.db.DBHelper;
 import com.lxsoft.frame.BaseActivity;
 import com.lxsoft.frame.LogWriter;
 import com.lxsoft.service.IPedometerService;
@@ -25,6 +29,7 @@ import com.lxsoft.utiles.Settings;
 import com.lxsoft.utiles.Utiles;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,6 +39,7 @@ public class SettingActivity extends BaseActivity {
     private String[] listTitle = {"设置步长","设置体重","传感器灵敏度","传感器采样时间"};
     private ListView settingListView;
     private ImageView back;
+    private Button history;
     static class ViewHolder{
         TextView title;
         TextView desc;
@@ -263,6 +269,20 @@ public class SettingActivity extends BaseActivity {
             }
         });
         settingListView.setAdapter(adapter);
+        history = findViewById(R.id.history);
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DBHelper dbHelper = new DBHelper(SettingActivity.this, DBHelper.DB_NAME);
+                ArrayList<PedometerBean> dataList = dbHelper.getFromDatabase();
+                for(int i=0;i<dataList.size();i++) {
+                    Log.d("TAG: ", " " + ((PedometerBean)dataList.get(i)).toString());
+                }
+                Intent intent = new Intent();
+                intent.setClass(SettingActivity.this, HistoryActivity2.class);
+                startActivity(intent);
+            }
+        });
     }
     private SettingListAdapter adapter = new SettingListAdapter();
 

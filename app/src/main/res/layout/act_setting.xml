@@ -25,6 +25,15 @@
             android:layout_margin="10dp"
             android:id="@+id/imageView"
             android:src="@drawable/left_arrow"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查看记录"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/blueBack"
+            android:id="@+id/history"/>
+
     </RelativeLayout>
     <ListView
         android:layout_width="match_parent"

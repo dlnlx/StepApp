@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.lxsoft.stepapp"
     android:versionCode="1"
     android:versionName="1.0">
@@ -8,6 +7,12 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <!-- 如果视频广告使用textureView播放，请务必添加，否则黑屏 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+
     <application
         android:name="com.lxsoft.frame.FrameApplication"
         android:allowBackup="true"
@@ -24,11 +29,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".BannerExpressActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".HomeActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".SettingActivity"
             android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".HistoryActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".HistoryActivity2"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".History2DetailActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.example.activitytest.ACTION_START" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <service android:name="com.lxsoft.service.PedometerService"
             android:process=":remote">
@@ -38,6 +59,17 @@
         </service>
         <meta-data android:value="60c816f5e044530ff0a3107f" android:name="UMENG_APPKEY"/>
         <meta-data android:value="${UMENG_CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
+        <provider
+            android:name="com.bytedance.sdk.openadsdk.TTFileProvider"
+            android:authorities="${applicationId}.TTFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <provider
+            android:name="com.bytedance.sdk.openadsdk.multipro.TTMultiProvider"   android:authorities="${applicationId}.TTMultiProvider"   android:exported="false" />
     </application>
 
 </manifest>
