@@ -36,9 +36,9 @@ public class Utiles {
         return gson.toJson(obj);
     }
 
-    public static PedometerChartBean jsonToObj(Gson gson){
+    public static PedometerChartBean jsonToObj(String gson){
         Gson gson2 = new Gson();
-        return gson2.fromJson(String.valueOf(gson), PedometerChartBean.class);
+        return gson2.fromJson(gson, PedometerChartBean.class);
     }
 
     public static String getFormatVal(double val){

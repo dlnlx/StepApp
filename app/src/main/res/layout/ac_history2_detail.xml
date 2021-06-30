@@ -235,7 +235,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="图标数据"
+        android:text="图表数据"
         android:gravity="center"
         android:textSize="20dp"
         android:textColor="@color/fontBlack"

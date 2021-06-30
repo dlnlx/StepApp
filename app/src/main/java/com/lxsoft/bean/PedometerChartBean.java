@@ -2,6 +2,18 @@ package com.lxsoft.bean;
 
 import android.os.Parcel;
 
+import androidx.annotation.NonNull;
+
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.google.gson.Gson;
+import com.lxsoft.utiles.Utiles;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+
 public class PedometerChartBean implements android.os.Parcelable{
     private int[] arrayData;
     private int index;
@@ -61,5 +73,12 @@ public class PedometerChartBean implements android.os.Parcelable{
         for (int i=0;i<arrayData.length;i++){
             arrayData[i]=0;
         }
+    }
+
+    @NonNull
+    @NotNull
+    @Override
+    public String toString() {
+        return "arrayData:"+ arrayData.toString()+" index:"+index;
     }
 }

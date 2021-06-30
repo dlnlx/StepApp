@@ -109,7 +109,6 @@ public class PedometerListener implements SensorEventListener {
                                 if(data != null){
                                     data.setStepCount(currentSteps);
                                     data.setLastStepTime(System.currentTimeMillis());
-
                                 }
                             }else{
                                 mLastDiff = sensitivity;

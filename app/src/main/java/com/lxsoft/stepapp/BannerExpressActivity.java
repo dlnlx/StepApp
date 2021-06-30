@@ -801,6 +801,7 @@ public class BannerExpressActivity extends Activity {
 
     private void startStepCount() throws RemoteException {
         btnStart.setText("停止");
+        stepCount.setText("0步");
         isChartUpdate = true;
         isRunning = true;
         //启动两个线程，定时获取数据，刷新UI

@@ -38,7 +38,7 @@ public class TTAdManagerHolder {
             TTAdSdk.init(context, buildConfig(context), new TTAdSdk.InitCallback() {
                 @Override
                 public void success() {
-                    Log.i(TAG, "success: ");
+                    LogWriter.i(TAG, "success: ");
                 }
 
                 @Override

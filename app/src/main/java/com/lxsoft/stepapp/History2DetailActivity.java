@@ -1,21 +1,29 @@
 package com.lxsoft.stepapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.google.gson.Gson;
 import com.lxsoft.bean.PedometerBean;
 import com.lxsoft.bean.PedometerChartBean;
 import com.lxsoft.frame.BaseActivity;
 import com.lxsoft.frame.FrameApplication;
+import com.lxsoft.frame.LogWriter;
 import com.lxsoft.utiles.ACache;
 import com.lxsoft.utiles.Utiles;
 
+import org.json.JSONArray;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class History2DetailActivity extends BaseActivity {
 
@@ -32,6 +40,8 @@ public class History2DetailActivity extends BaseActivity {
     private TextView show_startTime;
     private TextView show_lastStepTime;
     private TextView show_day;
+    private Gson gson;
+    private SharedPreferences mSpf;
     @Override
     protected void onInitVariable() {
 
@@ -102,11 +112,40 @@ public class History2DetailActivity extends BaseActivity {
         show_day = findViewById(R.id.show_day);
         show_day.setText(String.valueOf(pedometerBean.getDay()));
         dataChart = findViewById(R.id.datachart2);
-        ACache.get(FrameApplication.getInstance(), "JsonChartData");
+        mSpf = super.getSharedPreferences(String.valueOf(pedometerBean.getId()),MODE_PRIVATE);
+        String info = mSpf.getString(String.valueOf(pedometerBean.getId()),"");
+        LogWriter.d("CHART", "读取id:"+String.valueOf(pedometerBean.getId()));
+//        String info = mSpf.getString("test","");
+        LogWriter.d("CHART", info);
+        showChart(info);
     }
 
     @Override
     protected void onRequestData() {
 
+    }
+
+    public boolean showChart(String gson) {
+        PedometerChartBean bean = Utiles.jsonToObj(gson);
+        ArrayList<String> xVals = new ArrayList<String>();
+        ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();
+        if(bean != null){
+            for(int i=0;i<=bean.getIndex();i++){
+                xVals.add(String.valueOf(i)+"分");
+                int valY = bean.getArrayData()[i];
+                yVals.add(new BarEntry(valY, i));
+            }
+            //time.setText(String.valueOf(bean.getIndex())+"分");
+            BarDataSet set1 = new BarDataSet(yVals, "所走的步数");
+            set1.setBarSpacePercent(2f);
+            ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+            dataSets.add(set1);
+            BarData data = new BarData(xVals,dataSets);
+            data.setValueTextSize(10f);
+            dataChart.setData(data);
+            dataChart.invalidate();
+            return true;
+        }
+        return false;
     }
 }

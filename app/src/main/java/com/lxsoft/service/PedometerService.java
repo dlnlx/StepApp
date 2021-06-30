@@ -2,6 +2,7 @@ package com.lxsoft.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Handler;
@@ -14,10 +15,14 @@ import androidx.annotation.Nullable;
 import com.lxsoft.bean.PedometerChartBean;
 import com.lxsoft.db.DBHelper;
 import com.lxsoft.frame.FrameApplication;
+import com.lxsoft.frame.LogWriter;
 import com.lxsoft.utiles.ACache;
 import com.lxsoft.utiles.Settings;
 import com.lxsoft.utiles.Utiles;
 import com.lxsoft.bean.PedometerBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PedometerService extends Service {
@@ -28,8 +33,11 @@ public class PedometerService extends Service {
     public static final int STATUS_NOT_RUN = 0;
     public static final int STATUS_RUNNING = 1;
     private int runStatus = STATUS_NOT_RUN;
+    private SharedPreferences mSpf;
     private static final long SAVE_CHART_TIME=60000L;
     private Settings settings;
+    private List<PedometerBean> dataList = new ArrayList<>();
+
     private PedometerChartBean pedometerChartBean;
     private static Handler handler = new Handler();
     private Runnable timeRunnable = new Runnable() {
@@ -81,6 +89,8 @@ public class PedometerService extends Service {
         if(pedometerChartBean.getIndex()<1440-1){
             pedometerChartBean.setIndex(pedometerChartBean.getIndex()+1);
             pedometerChartBean.getArrayData()[pedometerChartBean.getIndex()] = pedometerBean.getStepCount();
+            String jsonStr = Utiles.objToJson(pedometerChartBean);
+            LogWriter.d("JSON", jsonStr);
         }
     }
 
@@ -88,6 +98,13 @@ public class PedometerService extends Service {
     /*将对象保存*/
     private void saveChartData(){
         String jsonStr = Utiles.objToJson(pedometerChartBean);
+        mSpf = super.getSharedPreferences(String.valueOf(pedometerBean.getId()+1),MODE_PRIVATE);
+        SharedPreferences.Editor editor = mSpf.edit();
+        editor.putString(String.valueOf(pedometerBean.getId()+1),jsonStr);
+        LogWriter.d("CHART", "存储id:"+String.valueOf(pedometerBean.getId()));
+//        editor.putString("test",jsonStr);
+        editor.commit();
+        LogWriter.d("JSON", jsonStr);
         ACache.get(FrameApplication.getInstance()).put("JsonChartData", jsonStr);
     }
 
@@ -118,12 +135,15 @@ public class PedometerService extends Service {
         @Override
         public void resetCount() throws RemoteException {
             if(pedometerBean != null){
-                pedometerBean.reset();
                 saveData();
+                pedometerBean.reset();
+//                saveData();
             }
             if(pedometerChartBean != null){
-                pedometerChartBean.reset();
+                LogWriter.d("JSON", pedometerChartBean.toString());
                 saveChartData();
+                pedometerChartBean.reset();
+                //saveChartData();
             }
             if(pedometerListener != null){
                 pedometerListener.setCurrentSteps(0);
@@ -165,6 +185,7 @@ public class PedometerService extends Service {
 
                     @Override
                     public void run() {
+                        LogWriter.d("JSON111", pedometerBean.toString());
                         DBHelper dbHelper = new DBHelper(PedometerService.this, DBHelper.DB_NAME);
                         pedometerBean.setStepCount(pedometerListener.getCurrentSteps());
                         pedometerBean.setLastStepTime(System.currentTimeMillis());
@@ -182,8 +203,12 @@ public class PedometerService extends Service {
                             long speed = Math.round((pedometerBean.getDistance()/1000)/(time/60*60));
                             pedometerBean.setSpeed(speed);
                         }
-                        Log.d("TAG", " "+pedometerBean.toString());
+                        LogWriter.d("TAG", " "+pedometerBean.toString());
                         dbHelper.writeToDatabase(pedometerBean);
+                        dataList = dbHelper.getFromDatabase();
+                        pedometerBean.setId(dataList.size());
+                        LogWriter.d("CHART", "个数:"+dataList.size());
+                        pedometerBean.setStepCount(0);
                     }
                 }).start();
             }

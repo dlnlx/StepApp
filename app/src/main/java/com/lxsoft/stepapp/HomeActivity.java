@@ -311,6 +311,8 @@ public class HomeActivity extends BaseActivity{
 
 
     public void updateChart(PedometerChartBean bean){
+        String jsonStr = Utiles.objToJson(bean);
+        LogWriter.d("JSON333", jsonStr);
         ArrayList<String> xVals = new ArrayList<String>();
         ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();
         if(bean != null){

@@ -276,7 +276,7 @@ public class SettingActivity extends BaseActivity {
                 DBHelper dbHelper = new DBHelper(SettingActivity.this, DBHelper.DB_NAME);
                 ArrayList<PedometerBean> dataList = dbHelper.getFromDatabase();
                 for(int i=0;i<dataList.size();i++) {
-                    Log.d("TAG: ", " " + ((PedometerBean)dataList.get(i)).toString());
+                    LogWriter.d("TAG: ", " " + ((PedometerBean)dataList.get(i)).toString());
                 }
                 Intent intent = new Intent();
                 intent.setClass(SettingActivity.this, HistoryActivity2.class);
